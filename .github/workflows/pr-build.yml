@@ -47,11 +47,14 @@ jobs:
         env:
           ENVIRONMENT: ${{ inputs.environment }}
           JVM_MEMORY_SIZE: ${{ inputs.jvm-memory-size }}
+        #  run: |
+        #  mvn clean package -DENVIRONMENT=$ENVIRONMENT -DJVM_MEMORY_SIZE=$JVM_MEMORY_SIZE docker:build
         run: |
-          mvn clean package -DENVIRONMENT=$ENVIRONMENT -DJVM_MEMORY_SIZE=$JVM_MEMORY_SIZE docker:build
+          mvn clean install -DENVIRONMENT=$ENVIRONMENT -DJVM_MEMORY_SIZE=$JVM_MEMORY_SIZE
 
-      - name: Build Docker Image
-        run: |
-          docker build -t ${{ inputs.docker-registry }}/${{ inputs.service-name }}:latest .
+
+     # - name: Build Docker Image
+       # run: |
+       #   docker build -t ${{ inputs.docker-registry }}/${{ inputs.service-name }}:latest .
 
       # Do not push the image in the PR build step
