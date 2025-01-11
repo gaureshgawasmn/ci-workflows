@@ -9,6 +9,12 @@ on:
       docker-registry:
         required: true
         type: string
+      environment:
+        required: true
+        type: string
+      jvm-memory-size:
+        required: true
+        type: string
     secrets:
       DOCKER_USERNAME:
         required: true
@@ -29,7 +35,10 @@ jobs:
           java-version: 17
 
       - name: Build Application
-        run: mvn clean package -DskipTests
+        env:
+          ENVIRONMENT: ${{ inputs.environment }}
+          JVM_MEMORY_SIZE: ${{ inputs.jvm-memory-size }}
+        run: mvn clean package -DENVIRONMENT=$ENVIRONMENT -DJVM_MEMORY_SIZE=$JVM_MEMORY_SIZE
 
       - name: Build Docker Image
         run: |
