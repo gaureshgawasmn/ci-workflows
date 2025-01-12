@@ -20,6 +20,10 @@ on:
         required: true
       DOCKER_PASSWORD:
         required: true
+      MAVEN_USERNAME:
+        required: true
+      MAVEN_PAT:
+        required: true
 
 jobs:
   build-and-docker:
@@ -47,6 +51,8 @@ jobs:
         env:
           ENVIRONMENT: ${{ inputs.environment }}
           JVM_MEMORY_SIZE: ${{ inputs.jvm-memory-size }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PAT: ${{ secrets.MAVEN_PAT }}
         #  run: |
         #  mvn clean package -DENVIRONMENT=$ENVIRONMENT -DJVM_MEMORY_SIZE=$JVM_MEMORY_SIZE docker:build
         run: |
